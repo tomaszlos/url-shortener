@@ -24,4 +24,4 @@ test:
 	docker-compose exec api sh -c "yarn test"
 
 	echo "Running test suite for Front-end"
-	cd ./app && yarn test --watchAll=false
+	docker-compose exec app sh -c "yarn test --watchAll=false"

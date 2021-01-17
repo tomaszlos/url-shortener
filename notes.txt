@@ -7,13 +7,20 @@ To run the application you can simply run:
 2. make server
 3. make test
 
-Please have on mind that tests require running server, as API tests are performed in a container.
+Please have on mind that tests require running server, as tests are performed in containers.
+
+You can reach the app through:
+http://localhost:8080
+
+Additionally, you can navigate to NoSQL Client:
+http://localhost:3333
 
 make server runs docker-compose setup consisting of:
 1. React front-end app
 2. NodeJS back-end
 3. Nginx
 4. MongoDB
+5. NoSQL client (for testing)
 
 Above target runs React and NodeJS containers in production mode. Additionally, there's a target make server-dev
 which enables hot module replacement in React app, and watch mode of pm2 serving API. Please have on mind that when
