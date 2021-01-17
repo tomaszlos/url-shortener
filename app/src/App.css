@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page--wrapper {
+  max-width: 600px;
+  width: 80vw
+}
+
+.App-header {
+  font-size: calc(10px + 2vmin);
+  color: white;
+  text-align: left;
+}
+
+.App-link {
+  color: #5685c3;
+  text-decoration: none;
+  margin: 10px 0
+}
+
+.Shortener-root-1 {
+  position: relative;
+}
+
+.busy--spinner {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+}
+
+.result-url--wrapper {
+  padding: 20px 0 10px;
+}

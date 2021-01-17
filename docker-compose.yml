@@ -1,0 +1,43 @@
+version: '3'
+services:
+  api:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    command: ["pm2-runtime", "index.js"]
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - api
+      - app
+
+  db:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./storage/db:/data/db
+
+  mongoclient:
+    image: mongoclient/mongoclient
+    restart: always
+    ports:
+      - 3333:3000
+    environment:
+      PORT: "3000"
+      INSTALL_MONGO: 0
+      MONGO_URL: "mongodb://db"
+      MONGOCLIENT_DEFAULT_CONNECTION_URL: "mongodb://db"
+      MONGOCLIENT_AUTH: 0
+    depends_on:
+      - db

@@ -1,0 +1,43 @@
+URL Shortener Exercise
+
+The exercise has been implemented according to the specification.
+
+To run the application you can simply run:
+1. make setup
+2. make server
+3. make test
+
+Please have on mind that tests require running server, as API tests are performed in a container.
+
+make server runs docker-compose setup consisting of:
+1. React front-end app
+2. NodeJS back-end
+3. Nginx
+4. MongoDB
+
+Above target runs React and NodeJS containers in production mode. Additionally, there's a target make server-dev
+which enables hot module replacement in React app, and watch mode of pm2 serving API. Please have on mind that when
+running in dev mode you can be getting 502 on the front-end before React builds itself in it's dev mode.
+
+To validate my solution against your requirement of serving at least 5 requests / second I implemented some naive
+performance test, which performs sequential calls to the API through NGINX. I usually get around 300-350 reqs/s.
+Obviously, such manner of making calls does not resemble real traffic.
+
+I took around 10 hrs to complete this exercise, but I was adapting React in the meantime, as I did not code much in it.
+Personally, I identified a few areas where I need to have a closer look into React and it's APIs. I am very much
+interested, though, as a VueJS developer.
+
+For database I chose MongoDB and for generating slugs I went with nanoid. Example in the requirements presented 6 chars
+long slugs but according to https://zelark.github.io/nano-id-cc/ this long slugs might reach 1% change of collision
+in just ~2 hours with 5 slugs/s rate. Raising the length to 12 chars also raises this period to ~62 years. Anyway, I
+implemented a collision detection based on unique field in model, and if Mongo throws duplicate I generate another slug.
+
+There is just one model, but I also implemented simple statistic regarding number of clicks. I would normalize model
+and go with separate models for URL (make them unique) and slug (I would call it "alias"), but this perhaps is better
+idea for relational DBs, at least in such simple application. For the purpose of statistics, I do allow multiple
+records regarding the same original url.
+
+Provided code should have more tests implemented regarding front-end, and some unit tests around url validation
+middleware. I used RegExp for validating the URL from here: https://gist.github.com/dperini/729294
+A few manual tests proven it works fine, but I did not spend more time on testing this feature, as I did not feel
+it was the most crucial part of the task.
